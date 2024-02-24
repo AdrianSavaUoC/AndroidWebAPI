@@ -5,16 +5,20 @@ plugins {
 
 android {
     namespace = "ac.uk.chester.j101418"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "ac.uk.chester.j101418"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {

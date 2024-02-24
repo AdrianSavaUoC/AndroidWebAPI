@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">J101418</string>
+    <string name="please_select_if_you_want_a_random_advice_or_you_want_to_look_one_by_id">Please select if you want a random advice or you want to look one by id</string>
+    <string name="go">GO</string>
 </resources>
