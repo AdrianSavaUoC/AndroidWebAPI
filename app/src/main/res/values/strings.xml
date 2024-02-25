@@ -2,4 +2,6 @@
     <string name="app_name">J101418</string>
     <string name="please_select_if_you_want_a_random_advice_or_you_want_to_look_one_by_id">Please select if you want a random advice or you want to look one by id</string>
     <string name="go">GO</string>
+    <string name="please_select_if_you_want_a_random_piece_of_advice_or_a_random_quote_from_a_famous_personality">Please select if you want a random piece of advice or a random quote from a famous personality</string>
+    <string name="back">Back</string>
 </resources>
