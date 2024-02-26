@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F0FFFF"
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/tvAnouncement"
+        android:id="@+id/tvAnnouncement"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -28,13 +27,13 @@
         android:id="@+id/spFirstChoice"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:layout_marginTop="48dp"
         android:layout_marginStart="60dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="60dp"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAnouncement" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAnnouncement" />
 
     <Button
         android:id="@+id/buttonGO"
@@ -51,12 +50,29 @@
         android:id="@+id/textView"
         android:layout_width="205dp"
         android:layout_height="94dp"
-        android:textSize="15sp"
         android:textAlignment="center"
         android:textColor="#6A5ACD"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonGO"
         app:layout_constraintVertical_bias="0.554" />
+
+    <TextView
+        android:id="@+id/tvLogo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:textAlignment="center"
+        android:text="@string/random_wisdom"
+        android:textSize="25sp"
+        android:textColor="#008B8B"
+        app:layout_constraintBottom_toTopOf="@+id/tvAnnouncement"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.496" />
 </androidx.constraintlayout.widget.ConstraintLayout>

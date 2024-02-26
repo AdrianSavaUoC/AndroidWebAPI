@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 import java.net.HttpURLConnection
@@ -21,15 +22,13 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var theQuerry: String
-    private lateinit var transferText : String
-
 
 
     private val resultLauncher = registerForActivityResult (ActivityResultContracts.StartActivityForResult() ) {
             result ->
     }
 
-    private fun loadAdviceAcrivity (id: String, advice: String) {
+    private fun loadAdviceActivity (id: String, advice: String) {
 
         val intent = Intent(this, AdviceActivity::class.java)
         intent.putExtra("advice", advice)
@@ -37,8 +36,20 @@ class MainActivity : AppCompatActivity() {
         resultLauncher.launch(intent)
     }
 
-    fun getAdvice () {
+    private fun loadQuoteActivity (id: String?, quote: String, author: String? ) {
+        val intent = Intent(this, QuoteActivity::class.java)
+        intent.putExtra("_id", id)
+        intent.putExtra("quote", quote)
+        intent.putExtra("author", author)
+        resultLauncher.launch(intent)
+    }
+
+    private fun getAdvice () {
         fetchData("https://api.adviceslip.com/advice")
+    }
+
+    private fun getQuote () {
+        fetchData("https://api.quotable.io/quotes/random")
     }
 
     private fun processAdviceJson(jsonString : String) : AdviceData {
@@ -54,6 +65,21 @@ class MainActivity : AppCompatActivity() {
 
         } catch (e: Exception) {
             return AdviceData("","")
+        }
+    }
+
+    private fun processQuoteJson(jsonString: String): QuoteData? {
+        return try {
+            val jsonArray = JSONArray(jsonString)
+            val jsonObject = jsonArray.getJSONObject(0)
+            val quoteId = jsonObject.getString("_id")
+            val quote = jsonObject.getString("content")
+            val author = jsonObject.getString("author")
+            QuoteData(quoteId, quote, author)
+
+        } catch (e: Exception) {
+
+            return QuoteData("quoteId", "quote", "author")
         }
     }
 
@@ -73,9 +99,20 @@ class MainActivity : AppCompatActivity() {
                     val scanner = Scanner(connection.inputStream).useDelimiter("\\A")
                     val text = if (scanner.hasNext()) scanner.next() else ""
 
-                    val adviceData = processAdviceJson(text)
+                    if (theQuerry == "Advice") {
+                        val adviceData = processAdviceJson(text)
+                        loadAdviceActivity(adviceData.id, adviceData.advice)
+                    }
+                    if (theQuerry == "Quote") {
+                        val quoteData = processQuoteJson(text)
+                        val id = quoteData?.id
+                        val quote = quoteData?.quote
+                        val author = quoteData?.author
 
-                    loadAdviceAcrivity(adviceData.id, adviceData.advice)
+                        if (quote != null) {
+                            loadQuoteActivity(id,quote, author)
+                        }
+                    }
                 }
             }
             catch (e: IOException) {
@@ -91,9 +128,6 @@ class MainActivity : AppCompatActivity() {
             binding.textView.text = text
         }
     }
-
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -119,29 +153,21 @@ class MainActivity : AppCompatActivity() {
                 theQuerry = choice
                 val yourPick = "Your pick"
 
-                if (theQuerry == "Quote") {
-                    binding.textView.text = "$yourPick: $theQuerry"
-                }
-                else {
-                    binding.textView.text = "$yourPick: $theQuerry"
-                }
+                updateTextView("$yourPick: $theQuerry")
+
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
 
         binding.buttonGO.setOnClickListener {
-
             if (theQuerry == "Advice") {
                 getAdvice()
             }
             if (theQuerry == "Quote") {
-                loadAdviceAcrivity("118","dummyQuote! is the first word in this dummy sentence")
+                getQuote()
             }
-
         }
-
-
 
     }
 }

@@ -22,7 +22,11 @@ class AdviceActivity : AppCompatActivity() {
         val intent = Intent (this, MainActivity::class.java)
         resultLauncher.launch(intent)
     }
-
+    private fun getFirstWord () : String? {
+        val advice = intent.getStringExtra("advice")
+        val words = advice?.split(Regex("[ ,?;.:!]+"))?.toMutableList()
+        return words?.firstOrNull()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,27 +35,22 @@ class AdviceActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val dummyId = intent.getStringExtra("id")
-        val dummy = intent.getStringExtra("advice")
+        val adviceId = intent.getStringExtra("id")
+        val adviceText = intent.getStringExtra("advice")
 
-
-        if (dummyId != null) {
-            id = dummyId
+        if (adviceId != null) {
+            id = adviceId
         }
-        if (dummy != null) {
-            advice = dummy
+        if (adviceText != null) {
+            advice = adviceText
         }
 
         val newAdvice = AdviceData(id, advice)
         adviceList.add(newAdvice)
 
-
-        val words = dummy?.split(Regex("[ ,?;.:!]+"))?.toMutableList()
-        val firstWord = words?.firstOrNull()
-
-        binding.tvAdviceView.text = firstWord
-
         binding.dummy.text = newAdvice.advice
+        val firstWord = getFirstWord()
+        binding.tvAdviceView.text = firstWord
 
         binding.buttonHome.setOnClickListener {
             loadMaintivity()

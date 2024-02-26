@@ -6,4 +6,11 @@
     <string name="back">Back</string>
     <string name="first_word_of_the_dummy">first word of the dummy</string>
     <string name="whole_dummy_text">whole dummy text</string>
+    <string name="advice_area">advice area</string>
+    <string name="first_word_of_the_advice">first word of the advice</string>
+    <string name="whole_quote_area">whole quote area</string>
+    <string name="author">author</string>
+    <string name="random_wisdom">RANDOM WISDOM</string>
+    <string name="random_advice">Random ADVICE</string>
+    <string name="random_quote">Random QUOTE</string>
 </resources>

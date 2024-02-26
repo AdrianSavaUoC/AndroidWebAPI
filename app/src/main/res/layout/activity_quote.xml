@@ -5,35 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F0FFFF"
-    tools:context=".AdviceActivity">
-
+    tools:context=".QuoteActivity">
 
     <TextView
-        android:id="@+id/tvAdviceLogo"
+        android:id="@+id/tvQuoteLogo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
-        android:text="@string/random_advice"
+        android:text="@string/random_quote"
         android:textAlignment="center"
         android:textColor="#008B8B"
-
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/dummy"
+        app:layout_constraintBottom_toTopOf="@+id/tvQuote"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.527" />
+        app:layout_constraintVertical_bias="0.478" />
 
     <TextView
-        android:id="@+id/tvAdviceView"
+        android:id="@+id/tvQuote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
-        android:hint="@string/first_word_of_the_advice"
-        android:textAlignment="center"
+        android:hint="@string/whole_quote_area"
+        android:textAlignment="textStart"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,7 +39,25 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.413"
+        app:layout_constraintVertical_bias="0.244"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/tvAuthor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:hint="@string/author"
+        android:textAlignment="viewEnd"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuote"
+        app:layout_constraintVertical_bias="0.118"
         tools:ignore="TextContrastCheck" />
 
     <Button
@@ -54,21 +70,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/dummy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
-        android:hint="@string/advice_area"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvAdviceView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.59"
-        tools:ignore="TextContrastCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>
