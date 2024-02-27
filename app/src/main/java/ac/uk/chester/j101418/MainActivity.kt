@@ -36,11 +36,12 @@ class MainActivity : AppCompatActivity() {
         resultLauncher.launch(intent)
     }
 
-    private fun loadQuoteActivity (id: String?, quote: String, author: String? ) {
+    private fun loadQuoteActivity (id: String?, quote: String, author: String?, slug: String ) {
         val intent = Intent(this, QuoteActivity::class.java)
         intent.putExtra("_id", id)
         intent.putExtra("quote", quote)
         intent.putExtra("author", author)
+        intent.putExtra("authorSlug", slug)
         resultLauncher.launch(intent)
     }
 
@@ -59,9 +60,7 @@ class MainActivity : AppCompatActivity() {
             val id = slipObject.getInt("id").toString()
             val advice = slipObject.getString("advice")
 
-            val newAdvice = AdviceData(id, advice)
-
-            newAdvice
+            AdviceData(id, advice)
 
         } catch (e: Exception) {
             return AdviceData("","")
@@ -75,11 +74,12 @@ class MainActivity : AppCompatActivity() {
             val quoteId = jsonObject.getString("_id")
             val quote = jsonObject.getString("content")
             val author = jsonObject.getString("author")
-            QuoteData(quoteId, quote, author)
+            val slug = jsonObject.getString("authorSlug")
+
+            QuoteData(quoteId, quote, author, slug)
 
         } catch (e: Exception) {
-
-            return QuoteData("quoteId", "quote", "author")
+            return QuoteData("quoteId", "quote", "author", "slug")
         }
     }
 
@@ -108,9 +108,12 @@ class MainActivity : AppCompatActivity() {
                         val id = quoteData?.id
                         val quote = quoteData?.quote
                         val author = quoteData?.author
+                        val authorSlug = quoteData?.authorSlug
 
                         if (quote != null) {
-                            loadQuoteActivity(id,quote, author)
+                            if (authorSlug != null) {
+                                loadQuoteActivity(id,quote, author, authorSlug)
+                            }
                         }
                     }
                 }

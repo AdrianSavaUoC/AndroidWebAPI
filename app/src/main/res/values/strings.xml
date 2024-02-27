@@ -13,4 +13,7 @@
     <string name="random_wisdom">RANDOM WISDOM</string>
     <string name="random_advice">Random ADVICE</string>
     <string name="random_quote">Random QUOTE</string>
+    <string name="press_the_button_if_you_want_to_read_more_quotes_from">Press the button if you want to read more quotes from</string>
+    <string name="textview">TextView</string>
+    <string name="get_quotes">Get Quotes</string>
 </resources>
