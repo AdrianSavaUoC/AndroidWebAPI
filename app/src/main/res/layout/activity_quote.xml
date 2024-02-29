@@ -43,23 +43,6 @@
         tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/tvFillText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
-        android:textAlignment="textStart"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="15sp"
-        android:text="@string/press_the_button_if_you_want_to_read_more_quotes_from"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck" />
-
-    <TextView
         android:id="@+id/tvAuthor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,12 +52,12 @@
         android:textAlignment="viewEnd"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvFillText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvQuote"
-        app:layout_constraintVertical_bias="0.118"
+        app:layout_constraintVertical_bias="0.207"
         tools:ignore="TextContrastCheck" />
 
     <Button
@@ -87,7 +70,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
+    <!--    <TextView
         android:id="@+id/tvAutor2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -97,7 +80,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/tvFillText"
         app:layout_constraintStart_toStartOf="@+id/tvFillText"
         app:layout_constraintTop_toTopOf="@+id/tvFillText"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0" />-->
 
     <Button
         android:id="@+id/buttonGetQuoteList"
@@ -110,6 +93,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFillText" />
+        app:layout_constraintTop_toBottomOf="@+id/tvFillText"
+        tools:ignore="VisualLintButtonSize" />
+
+    <TextView
+        android:id="@+id/tvFillText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:textAlignment="textStart"
+        android:textColor="#6A5ACD"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.534"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/tvNUmberOfQuotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonGetQuoteList"
+        tools:ignore="TextContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

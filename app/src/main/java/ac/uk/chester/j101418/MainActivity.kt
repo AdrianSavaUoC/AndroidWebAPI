@@ -86,6 +86,8 @@ class MainActivity : AppCompatActivity() {
     private fun fetchData(urlString: String) {
         val thread = Thread {
             try {
+                println("Fetching data for URL: $urlString")
+                println("Current value of theQuerry: $theQuerry")
                 val url = URL(urlString)
                 val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
                 connection.connectTimeout = 3000
@@ -109,16 +111,16 @@ class MainActivity : AppCompatActivity() {
                         val quote = quoteData?.quote
                         val author = quoteData?.author
                         val authorSlug = quoteData?.authorSlug
-
                         if (quote != null) {
                             if (authorSlug != null) {
-                                loadQuoteActivity(id,quote, author, authorSlug)
+                                loadQuoteActivity(id, quote, author, authorSlug)
                             }
                         }
                     }
                 }
             }
             catch (e: IOException) {
+                println("An error occurred while retrieving data from the server: $e")
                 updateTextView("An error has occurred while retrieving data from the server. $e")
             }
         }
