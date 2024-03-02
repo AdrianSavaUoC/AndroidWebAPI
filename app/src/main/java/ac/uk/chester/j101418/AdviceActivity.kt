@@ -48,9 +48,9 @@ class AdviceActivity : AppCompatActivity() {
         val newAdvice = AdviceData(id, advice)
         adviceList.add(newAdvice)
 
-        binding.dummy.text = newAdvice.advice
+        binding.tvAdvice.text = newAdvice.advice
         val firstWord = getFirstWord()
-        binding.tvAdviceView.text = firstWord
+        binding.tvContinueAdvice.text = "As a bonus, we can search all the advices that contain the first word of the above advice: $firstWord"
 
         binding.buttonHome.setOnClickListener {
             loadMaintivity()

@@ -77,8 +77,8 @@ class MainActivity : AppCompatActivity() {
             val slug = jsonObject.getString("authorSlug")
 
             QuoteData(quoteId, quote, author, slug)
-
-        } catch (e: Exception) {
+        }
+        catch (e: Exception) {
             return QuoteData("quoteId", "quote", "author", "slug")
         }
     }
@@ -86,8 +86,6 @@ class MainActivity : AppCompatActivity() {
     private fun fetchData(urlString: String) {
         val thread = Thread {
             try {
-                println("Fetching data for URL: $urlString")
-                println("Current value of theQuerry: $theQuerry")
                 val url = URL(urlString)
                 val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
                 connection.connectTimeout = 3000
@@ -115,12 +113,11 @@ class MainActivity : AppCompatActivity() {
                             if (authorSlug != null) {
                                 loadQuoteActivity(id, quote, author, authorSlug)
                             }
-                        }
+                        } 
                     }
                 }
             }
             catch (e: IOException) {
-                println("An error occurred while retrieving data from the server: $e")
                 updateTextView("An error has occurred while retrieving data from the server. $e")
             }
         }
@@ -134,17 +131,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
-
+    private fun makeSpinner() {
         val choiceRange = mutableListOf("Advice", "Quote")
         val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, choiceRange)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.spFirstChoice.adapter = adapter
 
         binding.spFirstChoice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -161,9 +151,21 @@ class MainActivity : AppCompatActivity() {
                 updateTextView("$yourPick: $theQuerry")
 
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
+    }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        makeSpinner()
 
         binding.buttonGO.setOnClickListener {
             if (theQuerry == "Advice") {
@@ -175,4 +177,5 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 }

@@ -2,6 +2,7 @@ package ac.uk.chester.j101418
 
 import ac.uk.chester.j101418.databinding.ActivityShowQuotesBinding
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,8 +26,8 @@ class ShowQuotesActivity : AppCompatActivity() {
         binding = ActivityShowQuotesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val quotes = intent.getSerializableExtra("quotesList") as List<QuoteItems>
 
+        val quotes = intent.getSerializableExtra("quotesList") as? List<QuoteItems> ?: emptyList()
         val author = intent.getStringExtra("author")
 
         binding.textView2.text = "We have found ${quotes.size} ${if (quotes.size == 1) "quote" else "quotes"} from $author"
@@ -39,7 +40,6 @@ class ShowQuotesActivity : AppCompatActivity() {
         binding.buttonHome.setOnClickListener {
             loadMainActivity()
         }
-
 
     }
 }

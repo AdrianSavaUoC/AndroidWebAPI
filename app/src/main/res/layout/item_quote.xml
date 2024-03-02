@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:barrierMargin="@dimen/material_emphasis_high_type"
-    android:background="#BBEDED"
-
+    android:background="@drawable/round_corners"
+    android:layout_marginBottom="1dp"
     android:padding="15dp">
 
     <TextView

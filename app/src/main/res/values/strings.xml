@@ -19,4 +19,13 @@
     <string name="number_of_quotes">number of quotes</string>
     <string name="single_quote">single quote</string>
     <string name="number_of_quotes_by_author">Number of Quotes</string>
+    <string name="get_bonus">Get bonus</string>
+    <string name="home">Home</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_fragment_quote_to_advice">hello fragment Quote to Advice</string>
 </resources>
