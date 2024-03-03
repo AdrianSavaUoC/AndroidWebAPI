@@ -1,3 +1,5 @@
+// QuotePhase2Activity.kt
+
 package ac.uk.chester.j101418
 
 import ac.uk.chester.j101418.databinding.ActivityQuotePhase2Binding
@@ -11,17 +13,16 @@ import java.util.Scanner
 
 class QuotePhase2Activity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityQuotePhase2Binding
-    private lateinit var firstWord : String
+    private lateinit var binding: ActivityQuotePhase2Binding
+    private lateinit var firstWord: String
     private val adviceFromQuoteList = mutableListOf<AdviceData>()
 
-
-    fun getAdviceFromQuote (){
+    private fun getAdviceFromQuote() {
         fetchData("https://api.adviceslip.com/advice/search/$firstWord")
-
     }
 
-    private fun processJson4Advice (jsonString: String)  {
+    private fun processJson4Advice(jsonString: String): List<AdviceData> {
+        val adviceFromQuoteList = mutableListOf<AdviceData>()
         try {
             val jsonObject = JSONObject(jsonString)
             val slipsArray = jsonObject.getJSONArray("slips")
@@ -35,11 +36,11 @@ class QuotePhase2Activity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
+        return adviceFromQuoteList
     }
 
     private fun fetchData(urlString: String) {
-        val thread = Thread{
+        val thread = Thread {
             try {
                 val url = URL(urlString)
                 val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
@@ -50,46 +51,30 @@ class QuotePhase2Activity : AppCompatActivity() {
 
                 val responseCode = connection.responseCode
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-
                     val scanner = Scanner(connection.inputStream).useDelimiter("\\A")
                     val text = if (scanner.hasNext()) scanner.next() else ""
-                    val decisionFragment = intent.getStringExtra("decisionFragment")
 
-                    if (decisionFragment == "fragmentQ2A") {
-                        processJson4Advice(text)
-                        val word = intent.getStringExtra("firstWord")
-                        if (word != null) {
-                            firstWord = word
-                        }
-                        val fragment = Quote2AdviceFragment.newInstance(firstWord)
-                        supportFragmentManager.beginTransaction()
-                            .add(R.id.flQuotesFragment, fragment)
-                            .commit()
-                    }
-
-                }
-                else
-                {
+                    val adviceList = processJson4Advice(text)
+                    adviceFromQuoteList.addAll(adviceList)
+                    val fragment = Quote2AdviceFragment.newInstance(adviceList)
+                    supportFragmentManager.beginTransaction()
+                        .add(R.id.flQuotesFragment, fragment)
+                        .commit()
+                } else {
                     updateTextView("the server returned an error. this one: $responseCode")
                 }
-
-            }
-            catch (e: IOException) {
+            } catch (e: IOException) {
                 updateTextView("the server returned an error. this one: $e")
             }
-
         }
         thread.start()
     }
-    private fun updateTextView (text: String) {
+
+    private fun updateTextView(text: String) {
         runOnUiThread {
-            binding.textView4.text
+            // Update your text view here
         }
     }
-
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,15 +83,6 @@ class QuotePhase2Activity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-
-        val fragmentQuoteList = QuoteListFragment()
-
-
-        //this is how you switch between fragments.
-        // you bind a button  onClick Listener fo the bellow, with the appropriate fragment.
-
-
-
         val decisionFragment = intent.getStringExtra("decisionFragment")
 
         if (decisionFragment == "fragmentQ2A") {
@@ -114,19 +90,15 @@ class QuotePhase2Activity : AppCompatActivity() {
             if (word != null) {
                 firstWord = word
             }
-            val fragment = Quote2AdviceFragment.newInstance(firstWord)
-            supportFragmentManager.beginTransaction()
-                .add(R.id.flQuotesFragment, fragment)
-                .commit()
-        }
-        else {
+            getAdviceFromQuote()
+        } else {
+            val fragmentQuoteList = QuoteListFragment()
             supportFragmentManager.beginTransaction().apply {
                 replace(R.id.flQuotesFragment, fragmentQuoteList)
                 commit()
             }
         }
-
-
-
     }
+
+
 }

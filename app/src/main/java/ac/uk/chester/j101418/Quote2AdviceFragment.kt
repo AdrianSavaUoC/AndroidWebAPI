@@ -9,24 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 
-
 class Quote2AdviceFragment : Fragment () {
 
-
-
-/*    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }*/
-
     private lateinit var binding: FragmentQuote2AdviceBinding
-    private lateinit var firstWord : String
-
-
 
     private val resultLauncher = registerForActivityResult (ActivityResultContracts.StartActivityForResult() ) {
             result ->
     }
+
+
     private fun loadMainActivity() {
         val intent = Intent(requireActivity(), MainActivity::class.java)
         resultLauncher.launch(intent)
@@ -34,10 +25,11 @@ class Quote2AdviceFragment : Fragment () {
 
 
     companion object {
-        fun newInstance(data: String?): Quote2AdviceFragment {
+        fun newInstance(data: List<AdviceData>?): Quote2AdviceFragment {
             val fragment = Quote2AdviceFragment()
-            val args = Bundle()
-            args.putString("firstWord", data)
+            val args = Bundle().apply {
+                putSerializable("adviceList", ArrayList(data))
+            }
             fragment.arguments = args
             return fragment
         }
@@ -47,42 +39,22 @@ class Quote2AdviceFragment : Fragment () {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentQuote2AdviceBinding.inflate(inflater, container, false)
         return binding.root
-
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val data = arguments?.getString("firstWord")
+        val advices = arguments?.getSerializable("adviceList") as List<AdviceData>?
 
-        if (data != null) {
-            firstWord = data
-        }
-
-
-        binding.tvFragmentQ2A.text = firstWord
-
-
+        val size = advices?.size
+        binding.tvFragmentQ2A.text = size.toString()
 
         binding.button.setOnClickListener{
             loadMainActivity()
-
         }
-
-
-
-
-
-
-
-
     }
-
 
 
 }
