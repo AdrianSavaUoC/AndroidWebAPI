@@ -20,6 +20,7 @@ class Quote2AdviceFragment : Fragment () {
     }*/
 
     private lateinit var binding: FragmentQuote2AdviceBinding
+    private lateinit var firstWord : String
 
 
 
@@ -57,7 +58,12 @@ class Quote2AdviceFragment : Fragment () {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val firstWord = arguments?.getString("firstWord")
+        val data = arguments?.getString("firstWord")
+
+        if (data != null) {
+            firstWord = data
+        }
+
 
         binding.tvFragmentQ2A.text = firstWord
 

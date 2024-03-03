@@ -49,6 +49,7 @@ class QuoteActivity : AppCompatActivity() {
         intent.putExtra("author", author)
         resultLauncher.launch(intent)
     }
+/*
 
     private fun loadQuotePhase2Activity (quotes: List<QuoteItems>, author: String) {
         val intent = Intent(this, ShowQuotesActivity::class.java)
@@ -56,6 +57,7 @@ class QuoteActivity : AppCompatActivity() {
         intent.putExtra("author", author)
         resultLauncher.launch(intent)
     }
+*/
 
     private fun loadQuotePhase2Activity (decisionFragment: String) {
         val intent = Intent(this, QuotePhase2Activity::class.java )
