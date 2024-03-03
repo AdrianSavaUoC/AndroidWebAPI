@@ -30,4 +30,5 @@
     <string name="hello_fragment_quote_to_advice">hello fragment Quote to Advice</string>
     <string name="number_of_advices">Number of advices</string>
     <string name="single_advice">single advice</string>
+    <string name="btnHome">Home</string>
 </resources>

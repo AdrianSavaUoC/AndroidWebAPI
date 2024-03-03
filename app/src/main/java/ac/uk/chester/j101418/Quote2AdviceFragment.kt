@@ -8,10 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.LinearLayoutManager
 
 class Quote2AdviceFragment : Fragment () {
 
     private lateinit var binding: FragmentQuote2AdviceBinding
+    private lateinit var advices : List<AdviceData>
 
     private val resultLauncher = registerForActivityResult (ActivityResultContracts.StartActivityForResult() ) {
             result ->
@@ -47,11 +49,18 @@ class Quote2AdviceFragment : Fragment () {
         super.onViewCreated(view, savedInstanceState)
 
         val advices = arguments?.getSerializable("adviceList") as List<AdviceData>?
+        if (advices != null) {
+            this.advices = advices
+        }
 
-        val size = advices?.size
-        binding.tvFragmentQ2A.text = size.toString()
+        val size = this.advices.size
+        binding.tvFragmentQ2A.text = "We have found ${size.toString()} pieces of advice containing the first word of the previous quote"
 
-        binding.button.setOnClickListener{
+        val adapter = advices?.let { AdviceAdapter(it) }
+        binding.rvAdviceList.adapter = adapter
+        binding.rvAdviceList.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.btnHome.setOnClickListener{
             loadMainActivity()
         }
     }

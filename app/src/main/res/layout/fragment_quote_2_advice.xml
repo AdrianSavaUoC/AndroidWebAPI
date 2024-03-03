@@ -4,30 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="15dp"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp"
     tools:context=".Quote2AdviceFragment">
 
 
     <TextView
         android:id="@+id/tvFragmentQ2A"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_fragment_quote_to_advice"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="4dp"
+        android:hint="@string/hello_fragment_quote_to_advice"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnHome"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="TextContrastCheck" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/tvFragmentQ2A"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/btnHome"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAdviceList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnHome"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFragmentQ2A" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
