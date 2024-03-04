@@ -4,6 +4,7 @@ import ac.uk.chester.j101418.databinding.ActivityAdviceBinding
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import org.json.JSONObject
 import java.io.IOException
@@ -18,9 +19,6 @@ class AdviceActivity : AppCompatActivity() {
     private lateinit var advice: String
 
     private val advices = mutableListOf<AdviceData>()
-
-
-
     private val adviceList = mutableListOf<AdviceData>()
 
     private val resultLauncher = registerForActivityResult (ActivityResultContracts.StartActivityForResult() ) {
@@ -79,10 +77,7 @@ class AdviceActivity : AppCompatActivity() {
 
                     val advice = processJson4Advice(text)
                     loadShowAdviceListActivity(advices)
-
-
                 }
-
             }
             catch (e: IOException) {
                 updateTextView("An error occurred while retrieving data from the server. This error: $e")
@@ -96,12 +91,15 @@ class AdviceActivity : AppCompatActivity() {
         binding.tvContinueAdvice.text = text
     }
 
-
-
     private fun getFirstWord () : String? {
         val advice = intent.getStringExtra("advice")
         val words = advice?.split(Regex("[ ,?;.:!]+"))?.toMutableList()
         return words?.firstOrNull()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.buttonSearchAdviceByWord.visibility = View.VISIBLE
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,6 +108,7 @@ class AdviceActivity : AppCompatActivity() {
         binding = ActivityAdviceBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        binding.buttonSearchAdviceByWord.visibility = View.VISIBLE
 
         val adviceId = intent.getStringExtra("id")
         val adviceText = intent.getStringExtra("advice")
@@ -130,6 +129,7 @@ class AdviceActivity : AppCompatActivity() {
 
         binding.buttonSearchAdviceByWord.setOnClickListener {
             getAdviceByWord()
+            binding.buttonSearchAdviceByWord.visibility = View.INVISIBLE
         }
 
         binding.buttonHome.setOnClickListener {

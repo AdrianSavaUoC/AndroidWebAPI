@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadAdviceActivity (id: String, advice: String) {
-
         val intent = Intent(this, AdviceActivity::class.java)
         intent.putExtra("advice", advice)
         intent.putExtra("id", id)
@@ -61,7 +60,6 @@ class MainActivity : AppCompatActivity() {
             val advice = slipObject.getString("advice")
 
             AdviceData(id, advice)
-
         } catch (e: Exception) {
             return AdviceData("","")
         }
@@ -151,10 +149,14 @@ class MainActivity : AppCompatActivity() {
                 updateTextView("$yourPick: $theQuerry")
 
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.buttonGO.visibility = View.VISIBLE
     }
 
 
@@ -164,6 +166,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        binding.buttonGO.visibility = View.VISIBLE
 
         makeSpinner()
 
@@ -174,8 +177,7 @@ class MainActivity : AppCompatActivity() {
             if (theQuerry == "Quote") {
                 getQuote()
             }
+            binding.buttonGO.visibility = View.INVISIBLE
         }
-
     }
-
 }

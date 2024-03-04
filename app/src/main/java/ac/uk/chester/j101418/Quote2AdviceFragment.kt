@@ -1,5 +1,4 @@
 package ac.uk.chester.j101418
-
 import ac.uk.chester.j101418.databinding.FragmentQuote2AdviceBinding
 import android.content.Intent
 import android.os.Bundle
@@ -27,10 +26,12 @@ class Quote2AdviceFragment : Fragment () {
 
 
     companion object {
-        fun newInstance(data: List<AdviceData>?): Quote2AdviceFragment {
+        fun newInstance(data: List<AdviceData>?, author: String, firstWord:String): Quote2AdviceFragment {
             val fragment = Quote2AdviceFragment()
             val args = Bundle().apply {
                 putSerializable("adviceList", ArrayList(data))
+                putString("author", author)
+                putString("firstWord", firstWord)
             }
             fragment.arguments = args
             return fragment
@@ -49,12 +50,14 @@ class Quote2AdviceFragment : Fragment () {
         super.onViewCreated(view, savedInstanceState)
 
         val advices = arguments?.getSerializable("adviceList") as List<AdviceData>?
+        val author = arguments?.getString("author")
+        val firstWord = arguments?.getString("firstWord")
         if (advices != null) {
             this.advices = advices
         }
 
         val size = this.advices.size
-        binding.tvFragmentQ2A.text = "We have found ${size.toString()} pieces of advice containing the first word of the previous quote"
+        binding.tvFragmentQ2A.text = "We have found ${size.toString()} pieces of advice containing \"$firstWord\", the first word of $author's  quote"
 
         val adapter = advices?.let { AdviceAdapter(it) }
         binding.rvAdviceList.adapter = adapter

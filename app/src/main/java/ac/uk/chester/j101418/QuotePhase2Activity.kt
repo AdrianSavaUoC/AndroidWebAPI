@@ -1,5 +1,3 @@
-// QuotePhase2Activity.kt
-
 package ac.uk.chester.j101418
 
 import ac.uk.chester.j101418.databinding.ActivityQuotePhase2Binding
@@ -16,9 +14,18 @@ class QuotePhase2Activity : AppCompatActivity() {
     private lateinit var binding: ActivityQuotePhase2Binding
     private lateinit var firstWord: String
     private val adviceFromQuoteList = mutableListOf<AdviceData>()
+    private lateinit var decisionFragment : String
+    private var authorSlug: String = "" // Initialize authorSlug here
+
+    private val quotesByAuthor = mutableListOf<QuoteItems>()
+    private lateinit var author : String
 
     private fun getAdviceFromQuote() {
         fetchData("https://api.adviceslip.com/advice/search/$firstWord")
+    }
+
+    private fun getQuotesByAuthor() {
+        fetchData("https://api.quotable.io/quotes?author=${authorSlug}&limit=150")
     }
 
     private fun processJson4Advice(jsonString: String): List<AdviceData> {
@@ -34,9 +41,28 @@ class QuotePhase2Activity : AppCompatActivity() {
                 adviceFromQuoteList.add(AdviceData(id, advice))
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            updateTextView("An error occurred while retrieving data from the server. This one: $e")
         }
         return adviceFromQuoteList
+    }
+
+    private fun processQuoteJson(jsonString: String): List<QuoteItems> {
+        val quotesList = mutableListOf<QuoteItems>()
+        try {
+            val jsonObject = JSONObject(jsonString)
+            val resultsArray = jsonObject.getJSONArray("results")
+
+            for (i in 0 until resultsArray.length()) {
+                val quoteObject = resultsArray.getJSONObject(i)
+                val id = quoteObject.getString("_id")
+                val content = quoteObject.getString("content")
+                val author = quoteObject.getString("author")
+                quotesList.add(QuoteItems(id, content, author))
+            }
+        } catch (e: Exception) {
+            updateTextView("An error occurred while retrieving data from the server. This one: $e")
+        }
+        return quotesList
     }
 
     private fun fetchData(urlString: String) {
@@ -54,12 +80,23 @@ class QuotePhase2Activity : AppCompatActivity() {
                     val scanner = Scanner(connection.inputStream).useDelimiter("\\A")
                     val text = if (scanner.hasNext()) scanner.next() else ""
 
-                    val adviceList = processJson4Advice(text)
-                    adviceFromQuoteList.addAll(adviceList)
-                    val fragment = Quote2AdviceFragment.newInstance(adviceList)
-                    supportFragmentManager.beginTransaction()
-                        .add(R.id.flQuotesFragment, fragment)
-                        .commit()
+                    if (decisionFragment == "fragmentQ2A") {
+                        val adviceList = processJson4Advice(text)
+                        adviceFromQuoteList.addAll(adviceList)
+                        val fragment = Quote2AdviceFragment.newInstance(adviceList, author, firstWord)
+
+                        supportFragmentManager.beginTransaction()
+                            .add(R.id.flQuotesFragment, fragment)
+                            .commit()
+                    }
+                    if (decisionFragment == "fragmentQL") {
+                        val quotesList = processQuoteJson(text)
+                        quotesByAuthor.addAll(quotesList)
+                        val fragment = QuoteListFragment.newInstance(quotesList, authorSlug)
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.flQuotesFragment, fragment)
+                            .commit()
+                    }
                 } else {
                     updateTextView("the server returned an error. this one: $responseCode")
                 }
@@ -72,7 +109,7 @@ class QuotePhase2Activity : AppCompatActivity() {
 
     private fun updateTextView(text: String) {
         runOnUiThread {
-            // Update your text view here
+           binding.textView4.text = text
         }
     }
 
@@ -83,22 +120,27 @@ class QuotePhase2Activity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val decisionFragment = intent.getStringExtra("decisionFragment")
+        author = intent.getStringExtra("author").toString()
 
-        if (decisionFragment == "fragmentQ2A") {
-            val word = intent.getStringExtra("firstWord")
-            if (word != null) {
-                firstWord = word
-            }
+        val decisionFragment = intent.getStringExtra("decisionFragment")
+        if (decisionFragment != null) {
+            this.decisionFragment = decisionFragment
+        }
+        val word = intent.getStringExtra("firstWord")
+
+        if (word != null) {
+            firstWord = word
+        }
+
+        if (this.decisionFragment == "fragmentQ2A") {
             getAdviceFromQuote()
-        } else {
-            val fragmentQuoteList = QuoteListFragment()
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.flQuotesFragment, fragmentQuoteList)
-                commit()
+        }
+        if (this.decisionFragment == "fragmentQL") {
+            val author = intent.getStringExtra("author")
+            if (author != null) {
+                authorSlug = author
+                getQuotesByAuthor()
             }
         }
     }
-
-
 }

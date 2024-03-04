@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:hint="@string/hello_fragment_quote_to_advice"
+        android:textColor="#008B8B"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/btnHome"
         app:layout_constraintEnd_toEndOf="parent"

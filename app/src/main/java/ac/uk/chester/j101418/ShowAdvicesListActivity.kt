@@ -33,19 +33,14 @@ class ShowAdvicesListActivity : AppCompatActivity() {
 
         val size = advices.size.toString()
 
-        binding.tvHeader.text = "We have found $size advices containing the word $firstWord"
+        binding.tvHeader.text = "We have found $size pieces of advice containing the word $firstWord"
 
         val adapter = AdviceAdapter(advices)
         binding.rvAdvices.adapter = adapter
         binding.rvAdvices.layoutManager = LinearLayoutManager(this)
 
-
         binding.buttonHome.setOnClickListener {
             loadMainActivity()
         }
-
-
-
-
     }
 }
