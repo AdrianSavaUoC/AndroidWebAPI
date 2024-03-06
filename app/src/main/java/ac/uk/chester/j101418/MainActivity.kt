@@ -126,6 +126,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateTextView(text: String) {
         runOnUiThread {
             binding.textView.text = text
+            binding.buttonGO.visibility = View.VISIBLE
         }
     }
 
