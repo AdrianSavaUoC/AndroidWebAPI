@@ -99,6 +99,7 @@ class AdviceActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        advices.clear()
         binding.buttonSearchAdviceByWord.visibility = View.VISIBLE
     }
 
